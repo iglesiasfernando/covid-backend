@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "e2d564e0-dad6-45ac-be5e-4ae43485f325",
+		"name": "Meli",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8069/covid/checks",
+					"host": [
+						"localhost"
+					],
+					"port": "8069",
+					"path": [
+						"covid",
+						"checks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-meli-covid.rj.r.appspot.com/covid/stats",
+					"protocol": "https",
+					"host": [
+						"api-meli-covid",
+						"rj",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"covid",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-meli-covid.rj.r.appspot.com/covid/checks/search?key=country&values=Brasil,Argentina",
+					"protocol": "https",
+					"host": [
+						"api-meli-covid",
+						"rj",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"covid",
+						"checks",
+						"search"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "country"
+						},
+						{
+							"key": "values",
+							"value": "Brasil,Argentina"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-meli-covid.rj.r.appspot.com/covid/checks/search?key=result&values=2,1",
+					"protocol": "https",
+					"host": [
+						"api-meli-covid",
+						"rj",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"covid",
+						"checks",
+						"search"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "result"
+						},
+						{
+							"key": "values",
+							"value": "2,1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\": \"Diego\",\r\n\"country\": \"Argentina\",\r\n\"dna\": [\"ATGCGA\", \"CGGTGC\", \"TTATGT\", \"AGAAGG\", \"CCCCTA\", \"TCAAAA\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api-meli-covid.rj.r.appspot.com/covid/checks",
+					"protocol": "https",
+					"host": [
+						"api-meli-covid",
+						"rj",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"covid",
+						"checks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
