@@ -1,0 +1,28 @@
+{
+  "name": "node-generic-api",
+  "version": "1.0.0",
+  "description": "Generic API to re-use",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "crypto": "^1.0.1",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^8.0.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "mongoose": "^4.11.8",
+    "multer": "^1.4.1",
+    "request": "^2.83.0",
+    "socket.io": "^2.0.4",
+    "throw.js": "3.0",
+    "uuid-lib": "0.0.6",
+    "winston": "^2.3.1",
+    "winston-levelonly": "^1.0.3"
+  }
+}

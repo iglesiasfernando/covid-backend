@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title>Generación de informe</title>
+</head>
+<body>
+<div style='text-align: center;' id='contact'>
+    <h1>Generación de informe</h1>
+    <form action='/api/informe/generarInforme' method='post'>
+        <div  style='display:inline-grid' >
+            <label style='margin-top: 3%;' for='desde'>Desde:</label>
+            <input min='2018-01-01' style='margin-top: 3%;' type='date' id='desde' name='desde' placeholder='Desde' />
+
+            <label style='margin-top: 3%;' for='hasta'>Hasta:</label>
+            <input min='2018-01-01' style='margin-top: 3%;' type='date' id='hasta' name='hasta' placeholder='Hasta' />
+            
+           <select name='select'>
+                <option value='value1'>Value 1</option> 
+                <option value='value2' selected>Value 2</option>
+                <option value='value3'>Value 3</option>
+            </select>
+            <input style='margin:4%' type='submit' value='Generar Informe' />
+        </div>    
+        
+
+    </form>
+</div>
+</body>
+</html>
