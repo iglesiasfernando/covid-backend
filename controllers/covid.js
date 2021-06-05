@@ -1,6 +1,7 @@
 const { result } = require('lodash');
 var resultEnum = require('../enums/resultadoEstudio');
 var filtersEnum = require('../enums/filters');
+var error = require('throw.js');
 
 var studyService = require('../services/study');
 
@@ -78,7 +79,7 @@ function search(req, res, next) {
 
     
 }
-function validateDna(dnaArray){
+function validateDnaFormat(dnaArray){
     var valida = true;
     if(!dnaArray || dnaArray.length == 0){
       valida = false;
@@ -93,37 +94,58 @@ function validateDna(dnaArray){
     return valida;
 
   }
+  async function validateDnaCharacters(dnaArray){
+    dnaAllowed = ["C","T","G","A"];
+    var retorno = true;
+    await asyncForEach(dnaArray,async function(dnaElement){
+        await asyncForEach(Array.from(dnaElement),async function(dnaChar){
+            if(!dnaAllowed.includes(dnaChar.toUpperCase())){
+                retorno = false;
+            }
+        });
+
+        
+    });
+    return retorno;
+  }
 async function insert(req, res, next) {
     var estudio = req.body;
 
-    if(validateDna(estudio.dna)){
-        var adnArray = estudio.dna;
+    if(validateDnaFormat(estudio.dna)){
+        if(await validateDnaCharacters(estudio.dna)){
+            var adnArray = estudio.dna;
 
-        var cantCuartetos = await contarCuartetos(adnArray);
-        var result;
-        if(cantCuartetos < 2){
-            result = resultEnum.NO_INFECTED;
-        }
-    
-        else if(cantCuartetos >= 2 && cantCuartetos < 4 ){
-            result = resultEnum.INFECTED;
+            var cantCuartetos = await contarCuartetos(adnArray);
+            var result;
+            if(cantCuartetos < 2){
+                result = resultEnum.NO_INFECTED;
+            }
+        
+            else if(cantCuartetos >= 2 && cantCuartetos < 4 ){
+                result = resultEnum.INFECTED;
+            }
+            else{
+                result = resultEnum.INFECTED_IMMUNE;
+        
+            }
+            estudio.result = result;
+            studyService.insert(estudio, function (err, study) {
+                if (err)
+                    return next(err);
+                
+                return res.json({ study: study });
+            });
         }
         else{
-            result = resultEnum.INFECTED_IMMUNE;
-    
+            return next(new error.BadRequest("El adn posee caracteres invalidos"));
+
+
         }
-        estudio.result = result;
-        studyService.insert(estudio, function (err, study) {
-            if (err)
-                return next(err);
-            
-            return res.json({ study: study });
-        });
+        
     
     }
     else{
-        return res.json({ message: "El dna no tiene el formato NxN" });
-
+        return next(new error.BadRequest("El adn no tiene el formato NxN"));
     }
     
 
