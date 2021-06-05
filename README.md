@@ -2,7 +2,7 @@
 <b>Tecnologia</b><br>
 Proyecto desarrollado en NodeJs.<br>
 <b>Base de datos</b><br>
-Persistencia de datos en mongoDb hosteada con mongo atlas<br>
+Persistencia de datos en mongoDb hosteada en => https://cloud.mongodb.com/<br>
 <b>Hosting</b><br>
 El proyecto esta hosteado en google cloud => https://api-meli-covid.rj.r.appspot.com<br>
 <b>Datos utiles</b><br>
