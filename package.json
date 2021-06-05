@@ -4,7 +4,9 @@
   "description": "Generic API to re-use",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "nyc mocha",
+    "test:repl": "mocha debug",
+    "test:debug": "mocha --inspect --debug-brk",
     "start": "node app.js"
   },
   "author": "",
@@ -24,5 +26,20 @@
     "uuid-lib": "0.0.6",
     "winston": "^2.3.1",
     "winston-levelonly": "^1.0.3"
+  },
+  "devDependencies": {
+    "babel-plugin-istanbul": "^6.0.0",
+    "babel-preset-latest": "^6.24.1",
+    "mocha": "^8.4.0",
+    "nyc": "^15.1.0"
+  },
+  "babel": {
+    "presets": ["latest"],
+    "env": {
+      "test": {
+        "plugins": ["istanbul"]
+      }
+    }
   }
+
 }

@@ -13,6 +13,14 @@ module.exports.search = search;
 module.exports.test = test;
 
 
+//expuesto para el test automatico con mocha
+module.exports.tieneCuartetoHorizontal = tieneCuartetoHorizontal;
+module.exports.contarCuartetos = contarCuartetos;
+module.exports.validateDnaFormat = validateDnaFormat;
+module.exports.validateDnaCharacters = validateDnaCharacters;
+//expuesto para el test automatico con mocha
+
+
 function getStats(req, res, next) {
     studyService.getStats(resultEnum.NO_INFECTED,function (err, noIfectedCount) {
         if (err)
@@ -37,9 +45,16 @@ function getStats(req, res, next) {
     });
 }
 
+/**
+ * Metodo que solo sirve para checkear que este vivo en el server 
+ */
 function test(req, res, next) {
         return res.json({ message:"vivo"});
 }
+
+/**
+ * Metodo que trae todos los estudios de la bdd 
+ */
 function getAll(req, res, next) {
     studyService.getAll(function (err, studies) {
         if (err)
@@ -49,6 +64,13 @@ function getAll(req, res, next) {
         return res.json(response);
     });
 }
+
+/**
+ * Metodo que busca todos los estudios de la bdd 
+ * @params search?key=country&values=Brasil,Argentina
+ * @params search?key=result&values=0,1
+ * 
+ */
 function search(req, res, next) {
 
     var valuesSearch;
@@ -79,6 +101,10 @@ function search(req, res, next) {
 
     
 }
+
+/**
+ * Metodo que valida el formato del dna NxN
+ */
 function validateDnaFormat(dnaArray){
     var valida = true;
     if(!dnaArray || dnaArray.length == 0){
@@ -94,6 +120,10 @@ function validateDnaFormat(dnaArray){
     return valida;
 
   }
+
+  /**
+ * Metodo que valida que el dna tenga los caracteres validos
+ */
   async function validateDnaCharacters(dnaArray){
     dnaAllowed = ["C","T","G","A"];
     var retorno = true;
@@ -108,6 +138,9 @@ function validateDnaFormat(dnaArray){
     });
     return retorno;
   }
+/**
+ * Metodo que inserta un estudio en la bdd
+ */
 async function insert(req, res, next) {
     var estudio = req.body;
 
@@ -152,14 +185,19 @@ async function insert(req, res, next) {
    
 }
 
+/**
+ * Metodo que cuenta los pares de 4 encontrados en el array de dna
+ */
  async function contarCuartetos(adnArray){
     cuentaDeCuartetos = 0;
+    //convierto el array de string en un array de chars
     adnArray = adnArray.map(function(element) {
         return Array.from(element)
         }
 
     );
     
+    //cuento los los pares de 4 horizontalmente en la matriz
     await asyncForEach(adnArray,async function(element){
         var coincidenciaHor = await tieneCuartetoHorizontal(element);
         if(coincidenciaHor){
@@ -170,6 +208,8 @@ async function insert(req, res, next) {
     //traspongo la matriz
     adnArray = adnArray[0].map((_, colIndex) => adnArray.map(row => row[colIndex]));
     
+    //cuento los los pares de 4 horizontalmente en la matriz (ahora traspuesta)
+
     await asyncForEach(adnArray,async function(element){
         var coincidenciaHor = await tieneCuartetoHorizontal(element);
         if(coincidenciaHor){
@@ -189,12 +229,18 @@ const asyncForEach = async (array, callback) => {
         await callback(array[index]);
      }
    };
+
+
+ /**
+  * 
+  * Metodo que chechea si el array pasado tiene 4 caracteres iguales
+  */  
  async function  tieneCuartetoHorizontal(adnArray){
     var contador = 0;
-    var lastElement;
+    var lastElement = '-1';
     await asyncForEach(adnArray,async function(element){
         if(contador < 4){
-            if(element == lastElement){
+            if(element.toUpperCase() == lastElement.toUpperCase()){
                 contador ++;
             }
             else{
